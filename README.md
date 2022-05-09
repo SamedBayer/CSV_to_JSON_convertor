@@ -21,3 +21,9 @@ make
 </pre>
 
 It will query specific items with JSONPath in C++
+
+Thanks to Dr. Darko Anicic for the task
+References and libraries:
+https://champlnx.blogspot.com/2017/12/json-for-c-create-json-objects-read.html
+https://github.com/nlohmann/json
+https://github.com/danielaparker/jsoncons
