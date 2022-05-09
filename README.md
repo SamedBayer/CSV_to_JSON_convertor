@@ -1,5 +1,5 @@
-# CSV_to_JSON_convertor
-Dynamic CSV Data Convertor to JSON in C++
+# CSV_to_JSON_converter
+Dynamic CSV Data Converter to JSON in C++
 ## How to run
 You can find the CSV Data in ZBE70001.txt
 
