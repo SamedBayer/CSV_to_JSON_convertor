@@ -7,9 +7,15 @@
 
 using namespace std;
 
+// Json library is taken from the github below, and explanations of how to use it
+// are mostly taken from the website below.
+// https://champlnx.blogspot.com/2017/12/json-for-c-create-json-objects-read.html
+// https://github.com/nlohmann/json
 #include "json1.hpp"
-
 using json = nlohmann::json;
+
+
+
 int main ( ) {
 
  
@@ -35,55 +41,51 @@ int main ( ) {
     std::map<std::string, std::map< std::string, std::string>> storageMap ; 
 
     while (std::getline(inputFile,line1)){
+
+
         
-
         if ( line1[0] == '*'){
-
-
-        std::getline(inputFile,line2);
-
-
-
-        if ( line2[0] == '#'){
+            std::getline(inputFile,line2);
 
 
 
-    
-        std::stringstream ss1(line1);
-        std::stringstream ss2(line2);
-        std::getline(ss1, machineName, ';');
-        std::getline(ss2, machineName, ';');
-        machineName.erase(0,1);
+
+            if ( line2[0] == '#'){
+
+                // Stream classes for strings
+                std::stringstream ss1(line1);
+                std::stringstream ss2(line2);
+                std::getline(ss1, machineName, ';');
+                std::getline(ss2, machineName, ';');
+                machineName.erase(0,1);
                 std::string substr1;
                 std::string substr2;
 
-            while (ss1.good()) {
+                while (ss1.good()) {
 
-                std::getline(ss1, substr1, ';');
-                std::getline(ss2, substr2, ';');
-                std::map<std::string, std::string> inner;
-                storageMap[machineName] [substr1 ] =substr2 ;         
-                
-    
-                   }
-
-              
+                    std::getline(ss1, substr1, ';');
+                    std::getline(ss2, substr2, ';');
+                    std::map<std::string, std::string> inner;
+                    storageMap[machineName] [substr1 ] =substr2 ;         
+                }
         }
+
+        
 
         else {
         
-        std::stringstream ss1(line1);
-        std::stringstream ss2(line2);
-        std::getline(ss1, machineName, ';');
-        std::getline(ss2, machineName2, ';');
+            std::stringstream ss1(line1);
+            std::stringstream ss2(line2);
+            std::getline(ss1, machineName, ';');
+            std::getline(ss2, machineName2, ';');
 
-        machineName.erase(0,1);
-        machineName2.erase(0,1);
-        std::string substr1;
-                std::string substr2;
+            machineName.erase(0,1);
+            machineName2.erase(0,1);
+            std::string substr1;
+            std::string substr2;
 
 
-        while (ss1.good()) {
+            while (ss1.good()) {
 
                 std::getline(ss1, substr1, ';');
                 std::getline(ss2, substr2, ';');
@@ -91,26 +93,15 @@ int main ( ) {
                 
                 storageMap[machineName] [substr1 ] = ""; 
                 storageMap[machineName2] [substr2 ] = "" ;        
-                
-    
-                   }
-
-
-
+                }
+            }
         }
-    
-        }
-
     }
 
     inputFile.close();
-    
+ 
 
-/*
-    for (std::pair<std::string, std::pair<std::string,std::string> element : u) {
-       std::cout << element.first << " :: " << (element.second).first << (element.second).second <<std::endl;
-    }
-*/
+// Printing 
 
 for( map<string,map<string,string> >::const_iterator ptr=storageMap.begin();ptr!=storageMap.end(); ptr++) {
     cout << "     " <<ptr->first << "   ::::::   "<< "\n";
@@ -118,10 +109,11 @@ for( map<string,map<string,string> >::const_iterator ptr=storageMap.begin();ptr!
         cout << eptr->first << "   -----   " << eptr->second << endl;
 
     }
-
 }
-    std::cout<< "Hello World" << std::endl ;
 
+
+
+// Creating a JSON object
 
 json j;
 for( map<string,map<string,string> >::const_iterator ptr=storageMap.begin();ptr!=storageMap.end(); ptr++) {
@@ -133,86 +125,9 @@ for( map<string,map<string,string> >::const_iterator ptr=storageMap.begin();ptr!
 
 }
 
+// Write JSON to here
 std::ofstream o("Temp_Siemens/pretty2.json");
 o << std::setw(4) << j << std::endl;
-
-
-
-
-
-
-/*
-
-json j;
-
-j["pi"] = 3.141;
-
-j["happy"] = true;
-
-j["name"] = "Niels";
-
-j["nothing"] = nullptr;
-
-j["answer"]["everything"] = 42;
-
-j["list"] = { 1, 0, 2 };
-
-j["object"] = { {"currency", "USD"}, {"value", 42.99} };
-
-json j2 = {
-  {"pi", 3.141},
-  {"happy", true},
-  {"name", "Niels"},
-  {"nothing", nullptr},
-  {"answer", {
-    {"everything", 42}
-  }},
-  {"list", {1, 0, 2}},
-  {"object", {
-    {"currency", "USD"},
-    {"value", 42.99}
-  }}
-};
-
-std::ofstream o("pretty.json");
-o << std::setw(4) << j << std::endl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    std::string str = "1,2,3,4,5,6";
-    std::vector<std::string> v;
- 
-    std::stringstream ss(str);
- 
-    while (ss.good()) {
-        std::string substr;
-        std::getline(ss, substr, ',');
-        v.push_back(substr);
-    }
- 
-    for (size_t i = 0; i < v.size(); i++)
-        std::cout << v[i] << std::endl;
-
-
-*/
 
     return 0; 
 }
